@@ -1,17 +1,1118 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>PromptCraft Pro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Prompt Generator - Create Professional Photo Prompts</title>
+    <meta name="description" content="Transform basic image requests into professional AI prompts for ChatGPT, DALL-E, and Midjourney. Get better AI-generated photos with expert prompt engineering.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary: #f8f9ff;
+            --accent: #4CAF50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --text: #2c3e50;
+            --text-light: #6c757d;
+            --border: #e9ecef;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--secondary);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        .premium-badge {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .premium-badge:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .example-before, .example-after {
+            margin-bottom: 15px;
+        }
+
+        .example-before span, .example-after span {
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .example-before span {
+            color: #e74c3c;
+        }
+
+        .example-after span {
+            color: #27ae60;
+        }
+
+        .example-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        /* Usage Counter */
+        .usage-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .usage-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .usage-progress {
+            width: 200px;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .usage-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .upgrade-btn {
+            background: var(--warning);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .upgrade-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        /* Main Section */
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .section h2 {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            color: var(--text);
+        }
+
+        /* Photo Type Selection */
+        .photo-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .photo-type {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .photo-type:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .photo-type.selected {
+            border-color: #667eea;
+            background: var(--primary);
+            color: white;
+        }
+
+        .photo-type h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .photo-type p {
+            font-size: 0.9em;
+            opacity: 0.85;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1.05em;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafbff;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.6;
+        }
+
+        /* Style Chips */
+        .style-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .style-chip {
+            background: #f8f9ff;
+            border: 2px solid #e8ecff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .style-chip:hover {
+            border-color: #667eea;
+        }
+
+        .style-chip.selected {
+            background: var(--primary);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-success {
+            background: var(--accent);
+        }
+
+        /* Output Section */
+        .output-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 2px solid #e8ecff;
+            box-shadow: var(--shadow);
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .output-text {
+            background: white;
+            border: 2px solid #e8ecff;
+            border-radius: 12px;
+            padding: 25px;
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            min-height: 150px;
+            white-space: pre-wrap;
+            color: var(--text);
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .output-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Premium Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .photo-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .output-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .output-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-  <h1>PromptCraft Pro</h1>
-  <p>This is your AI prompt builder exported as index.html, ready to deploy on Vercel or host locally.</p>
-  <script>
-    // Placeholder: You can paste in the actual functionality or JavaScript if needed.
-    console.log("PromptCraft Pro Loaded");
-  </script>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">📸 AI Photo Prompt Generator</div>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Examples</a>
+                <a href="#" class="nav-link">Styles</a>
+                <a href="#" class="nav-link">Help</a>
+                <a href="#" class="premium-badge" onclick="showPremiumModal()">Upgrade to Pro</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🎨 Turn Bad Prompts Into Amazing Photos</h1>
+            <p>Stop getting terrible AI images! Transform your basic requests into professional prompts that actually work with ChatGPT, DALL-E, and Midjourney.</p>
+            
+            <div class="example-box">
+                <div class="example-before">
+                    <span>❌ What You Type:</span>
+                    <div class="example-text">"make me a realistic professional headshot close up with really good quality"</div>
+                </div>
+                <div class="example-after">
+                    <span>✅ What You Get:</span>
+                    <div class="example-text">"Professional corporate headshot, 35mm lens, 4K HDR quality, sharp focus on face, studio lighting, neutral expression, business attire, clean background, award-winning photography, hyperdetailed, photorealistic"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Bar -->
+        <div class="usage-bar">
+            <div class="usage-info">
+                <span>Free Plan:</span>
+                <div class="usage-progress">
+                    <div class="usage-fill" id="usageFill" style="width: 40%"></div>
+                </div>
+                <span id="usageText">2/5 prompts used today</span>
+            </div>
+            <button class="upgrade-btn" onclick="showPremiumModal()">Get Unlimited Prompts</button>
+        </div>
+
+        <!-- Photo Type Selection -->
+        <div class="section">
+            <h2>📷 What Type of Photo Do You Want?</h2>
+            <div class="photo-types" id="photoTypes">
+                <div class="photo-type" onclick="selectPhotoType('portrait')" id="type-portrait">
+                    <h3>👤 Portrait/Headshot</h3>
+                    <p>Professional headshots, LinkedIn photos, dating profile pics</p>
+                </div>
+                <div class="photo-type" onclick="selectPhotoType('product')" id="type-product">
+                    <h3>📦 Product Photos</h3>
+                    <p>E-commerce, Amazon listings, marketing materials</p>
+                </div>
+                <div class="photo-type" onclick="selectPhotoType('lifestyle')" id="type-lifestyle">
+                    <h3>🌟 Lifestyle</h3>
+                    <p>Social media, Instagram, casual photos</p>
+                </div>
+                <div class="photo-type" onclick="selectPhotoType('business')" id="type-business">
+                    <h3>💼 Business/Corporate</h3>
+                    <p>Company photos, team shots, office environments</p>
+                </div>
+                <div class="photo-type" onclick="selectPhotoType('creative')" id="type-creative">
+                    <h3>🎨 Creative/Artistic</h3>
+                    <p>Artistic shots, creative concepts, unique styles</p>
+                </div>
+                <div class="photo-type" onclick="selectPhotoType('food')" id="type-food">
+                    <h3>🍕 Food & Restaurant</h3>
+                    <p>Menu photos, food styling, restaurant marketing</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompt Input -->
+        <div class="section">
+            <h2>✍️ Describe What You Want (Be Basic - We'll Make It Professional!)</h2>
+            
+            <div class="form-group">
+                <label for="basicPrompt">Tell us what photo you want in simple words:</label>
+                <textarea id="basicPrompt" placeholder="Example: 'a professional headshot of me with good lighting and quality' or 'product photo of my coffee mug on a table'"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="subject">Main Subject:</label>
+                    <input type="text" id="subject" placeholder="person, product, food item, etc.">
+                </div>
+                <div class="form-group">
+                    <label for="setting">Setting/Background:</label>
+                    <select id="setting">
+                        <option value="">Choose background...</option>
+                        <option value="studio">Clean Studio Background</option>
+                        <option value="office">Professional Office</option>
+                        <option value="outdoor">Natural Outdoor</option>
+                        <option value="home">Home Environment</option>
+                        <option value="restaurant">Restaurant/Cafe</option>
+                        <option value="abstract">Abstract/Artistic</option>
+                        <option value="minimal">Minimal/Clean</option>
+                        <option value="luxury">Luxury/High-End</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Photography Style (select multiple):</label>
+                <div class="style-chips" id="styleChips">
+                    <div class="style-chip" onclick="toggleStyle(this)" data-style="professional">Professional</div>
+                    <div class="style-chip" onclick="toggleStyle(this)" data-style="casual">Casual</div>
+                    <div class="style-chip" onclick="toggleStyle(this)" data-style="artistic">Artistic</div>
+                    <div class="style-chip" onclick="toggleStyle(this)" data-style="modern">Modern</div>
+                    <div class="style-chip" onclick="toggleStyle(this)" data-style="vintage">Vintage</div>
+                    <div class="style-chip" onclick="toggleStyle(this)" data-style="dramatic">Dramatic</div>
+                    <div class="style-chip" onclick="toggleStyle(this)" data-style="bright">Bright & Airy</div>
+                    <div class="style-chip" onclick="toggleStyle(this)" data-style="moody">Dark & Moody</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="quality">Quality Level:</label>
+                    <select id="quality">
+                        <option value="standard">Standard Quality</option>
+                        <option value="high">High Quality (4K)</option>
+                        <option value="ultra">Ultra Quality (8K HDR)</option>
+                        <option value="award">Award-Winning Quality</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="camera">Camera Style:</label>
+                    <select id="camera">
+                        <option value="">Auto-Select Best Camera</option>
+                        <option value="35mm">35mm Portrait Lens</option>
+                        <option value="85mm">85mm Portrait Lens</option>
+                        <option value="50mm">50mm Standard Lens</option>
+                        <option value="24mm">24mm Wide Angle</option>
+                        <option value="macro">Macro Close-up</option>
+                        <option value="telephoto">Telephoto Compression</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn" onclick="generatePhotoPrompt()" id="generateBtn">
+                🚀 Transform My Prompt Into Professional Quality
+            </button>
+        </div>
+
+        <!-- Output Section -->
+        <div class="output-section" id="outputSection" style="display: none;">
+            <div class="output-header">
+                <h2>🎯 Your Professional AI Photo Prompt</h2>
+                <div class="output-actions">
+                    <button class="btn btn-success" onclick="copyToClipboard()" id="copyBtn">
+                        📋 Copy Prompt
+                    </button>
+                    <button class="btn" onclick="tryAnother()">
+                        🔄 Try Another Style
+                    </button>
+                </div>
+            </div>
+            <div class="output-text" id="outputText"></div>
+            <div class="output-actions">
+                <button class="btn" onclick="downloadPrompt()">💾 Save Prompt</button>
+                <button class="btn" onclick="sharePrompt()">🔗 Share</button>
+                <button class="btn" onclick="optimizeMore()">⚡ Optimize Further (Pro)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Modal -->
+    <div class="modal" id="premiumModal">
+        <div class="modal-content">
+            <span class="close" onclick="closePremiumModal()">&times;</span>
+            <h3>🚀 Upgrade to Pro</h3>
+            <p>Get unlimited professional photo prompts, advanced styles, and exclusive templates!</p>
+            
+            <div style="margin: 30px 0;">
+                <div style="font-size: 2em; font-weight: 800; color: var(--text);">$19<span style="font-size: 0.5em; color: var(--text-light);">/month</span></div>
+                <ul style="text-align: left; margin: 20px 0;">
+                    <li>✅ Unlimited photo prompt generation</li>
+                    <li>✅ 50+ advanced photography styles</li>
+                    <li>✅ Industry-specific templates</li>
+                    <li>✅ Batch prompt processing</li>
+                    <li>✅ Download & save prompts</li>
+                    <li>✅ Priority support</li>
+                </ul>
+                <button class="btn" onclick="upgrade()">Start Pro Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Application State
+        let userState = {
+            plan: 'free',
+            promptsUsed: 2,
+            promptsLimit: 5,
+            selectedPhotoType: '',
+            selectedStyles: []
+        };
+
+        // Photo type data with professional prompt components
+        const photoTypeData = {
+            portrait: {
+                baseTerms: ['portrait photography', 'professional headshot', 'studio lighting'],
+                technical: ['85mm lens', 'shallow depth of field', 'sharp focus on eyes'],
+                lighting: ['soft key lighting', 'rim lighting', 'professional portrait lighting'],
+                quality: ['high resolution', 'commercial photography quality']
+            },
+            product: {
+                baseTerms: ['product photography', 'commercial photography', 'clean presentation'],
+                technical: ['macro lens', 'focus stacking', 'perfect exposure'],
+                lighting: ['studio lighting setup', 'soft shadows', 'highlight details'],
+                quality: ['e-commerce quality', 'marketing material grade']
+            },
+            lifestyle: {
+                baseTerms: ['lifestyle photography', 'natural moments', 'candid style'],
+                technical: ['35mm lens', 'natural lighting', 'documentary style'],
+                lighting: ['golden hour', 'soft natural light', 'ambient lighting'],
+                quality: ['social media ready', 'Instagram worthy']
+            },
+            business: {
+                baseTerms: ['corporate photography', 'business professional', 'executive style'],
+                technical: ['50mm lens', 'formal composition', 'professional framing'],
+                lighting: ['office lighting', 'professional setup', 'business appropriate'],
+                quality: ['corporate standard', 'annual report quality']
+            },
+            creative: {
+                baseTerms: ['artistic photography', 'creative vision', 'conceptual art'],
+                technical: ['creative angles', 'artistic composition', 'experimental techniques'],
+                lighting: ['dramatic lighting', 'creative shadows', 'artistic illumination'],
+                quality: ['gallery worthy', 'fine art quality']
+            },
+            food: {
+                baseTerms: ['food photography', 'culinary presentation', 'appetizing styling'],
+                technical: ['macro photography', 'food styling', 'selective focus'],
+                lighting: ['food photography lighting', 'appetizing illumination', 'fresh appearance'],
+                quality: ['menu quality', 'restaurant marketing grade']
+            }
+        };
+
+        // Style enhancement mappings
+        const styleEnhancements = {
+            professional: ['commercial grade', 'business quality', 'executive standard'],
+            casual: ['relaxed atmosphere', 'natural feel', 'approachable'],
+            artistic: ['fine art quality', 'gallery worthy', 'creative vision'],
+            modern: ['contemporary style', 'clean aesthetic', 'current trends'],
+            vintage: ['retro styling', 'classic feel', 'timeless quality'],
+            dramatic: ['high contrast', 'bold shadows', 'striking composition'],
+            bright: ['high key lighting', 'airy feel', 'clean bright aesthetic'],
+            moody: ['low key lighting', 'atmospheric', 'cinematic mood']
+        };
+
+        // Quality mappings
+        const qualityLevels = {
+            standard: ['good quality', 'clear image', 'proper exposure'],
+            high: ['4K resolution', 'high definition', 'crisp details'],
+            ultra: ['8K HDR', 'ultra high resolution', 'maximum detail'],
+            award: ['award winning photography', 'masterpiece quality', 'professional excellence']
+        };
+
+        // Camera mappings
+        const cameraStyles = {
+            '35mm': ['35mm lens', 'standard perspective', 'natural field of view'],
+            '85mm': ['85mm portrait lens', 'compressed perspective', 'beautiful bokeh'],
+            '50mm': ['50mm lens', 'natural perspective', 'versatile framing'],
+            '24mm': ['24mm wide angle', 'expanded perspective', 'dramatic angles'],
+            macro: ['macro lens', 'extreme close-up', 'fine detail capture'],
+            telephoto: ['telephoto lens', 'compressed background', 'isolated subject']
+        };
+
+        // Background mappings
+        const backgroundStyles = {
+            studio: ['clean studio background', 'seamless backdrop', 'professional studio setup'],
+            office: ['modern office environment', 'professional workspace', 'corporate setting'],
+            outdoor: ['natural outdoor setting', 'environmental background', 'location photography'],
+            home: ['comfortable home environment', 'personal space', 'intimate setting'],
+            restaurant: ['restaurant ambiance', 'dining atmosphere', 'culinary environment'],
+            abstract: ['abstract background', 'artistic backdrop', 'creative environment'],
+            minimal: ['minimal background', 'clean simple backdrop', 'uncluttered composition'],
+            luxury: ['luxury setting', 'high-end environment', 'premium backdrop']
+        };
+
+        function selectPhotoType(type) {
+            // Remove previous selection
+            document.querySelectorAll('.photo-type').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select new type
+            document.getElementById(`type-${type}`).classList.add('selected');
+            userState.selectedPhotoType = type;
+        }
+
+        function toggleStyle(element) {
+            element.classList.toggle('selected');
+            const style = element.dataset.style;
+            
+            if (userState.selectedStyles.includes(style)) {
+                userState.selectedStyles = userState.selectedStyles.filter(s => s !== style);
+            } else {
+                userState.selectedStyles.push(style);
+            }
+        }
+
+        function generatePhotoPrompt() {
+            if (userState.plan === 'free' && userState.promptsUsed >= userState.promptsLimit) {
+                showPremiumModal();
+                return;
+            }
+
+            const basicPrompt = document.getElementById('basicPrompt').value;
+            const subject = document.getElementById('subject').value;
+            const setting = document.getElementById('setting').value;
+            const quality = document.getElementById('quality').value;
+            const camera = document.getElementById('camera').value;
+
+            if (!basicPrompt.trim()) {
+                showToast('Please describe what photo you want!', 'error');
+                return;
+            }
+
+            if (!userState.selectedPhotoType) {
+                showToast('Please select a photo type!', 'error');
+                return;
+            }
+
+            // Show loading
+            const btn = document.getElementById('generateBtn');
+            btn.innerHTML = '<div class="loading"></div> Creating Professional Prompt...';
+            btn.disabled = true;
+
+            // Simulate processing
+            setTimeout(() => {
+                const professionalPrompt = buildProfessionalPrompt({
+                    basicPrompt,
+                    subject,
+                    setting,
+                    quality,
+                    camera,
+                    photoType: userState.selectedPhotoType,
+                    styles: userState.selectedStyles
+                });
+
+                displayPrompt(professionalPrompt);
+                
+                // Update usage
+                if (userState.plan === 'free') {
+                    userState.promptsUsed++;
+                    updateUsageBar();
+                }
+
+                // Reset button
+                btn.innerHTML = '🚀 Transform My Prompt Into Professional Quality';
+                btn.disabled = false;
+
+                showToast('Professional prompt generated!', 'success');
+            }, 2000);
+        }
+
+        function buildProfessionalPrompt(data) {
+            let prompt = '';
+            let components = [];
+
+            // Get photo type specific terms
+            const typeData = photoTypeData[data.photoType] || photoTypeData.portrait;
+            
+            // Start with subject and basic description
+            if (data.subject) {
+                components.push(`${data.subject}`);
+            }
+            
+            // Add photo type base terms
+            components.push(...typeData.baseTerms);
+
+            // Add style enhancements
+            data.styles.forEach(style => {
+                if (styleEnhancements[style]) {
+                    components.push(...styleEnhancements[style]);
+                }
+            });
+
+            // Add technical specifications
+            components.push(...typeData.technical);
+
+            // Add camera style if selected
+            if (data.camera && cameraStyles[data.camera]) {
+                components.push(...cameraStyles[data.camera]);
+            }
+
+            // Add background/setting
+            if (data.setting && backgroundStyles[data.setting]) {
+                components.push(...backgroundStyles[data.setting]);
+            }
+
+            // Add lighting
+            components.push(...typeData.lighting);
+
+            // Add quality level
+            if (data.quality && qualityLevels[data.quality]) {
+                components.push(...qualityLevels[data.quality]);
+            }
+
+            // Add professional photography terms
+            const professionalTerms = [
+                'professional photography',
+                'sharp focus',
+                'perfect composition',
+                'studio quality',
+                'commercial grade'
+            ];
+            components.push(...professionalTerms);
+
+            // Add technical photography terms
+            const technicalTerms = [
+                'proper exposure',
+                'color accuracy',
+                'optimal lighting',
+                'professional equipment',
+                'post-processing perfected'
+            ];
+            components.push(...technicalTerms);
+
+            // Remove duplicates and join
+            const uniqueComponents = [...new Set(components)];
+            prompt = uniqueComponents.join(', ');
+
+            // Add AI model specific enhancements
+            prompt += ', hyperrealistic, photorealistic, ultra-detailed, masterpiece quality, trending on photography portfolios';
+
+            return prompt;
+        }
+
+        function displayPrompt(prompt) {
+            document.getElementById('outputText').textContent = prompt;
+            document.getElementById('outputSection').style.display = 'block';
+            document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyToClipboard() {
+            const outputText = document.getElementById('outputText').textContent;
+            navigator.clipboard.writeText(outputText).then(() => {
+                const btn = document.getElementById('copyBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Copied!';
+                btn.style.background = 'var(--accent)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'var(--accent)';
+                }, 2000);
+
+                showToast('Prompt copied! Paste it into ChatGPT, DALL-E, or Midjourney!', 'success');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                showToast('Failed to copy. Please select and copy manually.', 'error');
+            });
+        }
+
+        function tryAnother() {
+            // Generate a variation of the current prompt
+            generatePhotoPrompt();
+        }
+
+        function downloadPrompt() {
+            if (userState.plan === 'free') {
+                showPremiumModal();
+                return;
+            }
+
+            const prompt = document.getElementById('outputText').textContent;
+            const blob = new Blob([prompt], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ai-photo-prompt.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Prompt downloaded!', 'success');
+        }
+
+        function sharePrompt() {
+            if (userState.plan === 'free') {
+                showPremiumModal();
+                return;
+            }
+            
+            const prompt = document.getElementById('outputText').textContent;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'AI Photo Prompt',
+                    text: prompt
+                });
+            } else {
+                // Fallback - copy to clipboard
+                copyToClipboard();
+                showToast('Prompt copied for sharing!', 'success');
+            }
+        }
+
+        function optimizeMore() {
+            if (userState.plan === 'free') {
+                showPremiumModal();
+                return;
+            }
+            
+            showToast('AI optimization feature coming soon!', 'info');
+        }
+
+        function updateUsageBar() {
+            const fill = document.getElementById('usageFill');
+            const text = document.getElementById('usageText');
+            const percentage = (userState.promptsUsed / userState.promptsLimit) * 100;
+            
+            fill.style.width = `${percentage}%`;
+            text.textContent = `${userState.promptsUsed}/${userState.promptsLimit} prompts used today`;
+
+            if (percentage >= 100) {
+                fill.style.background = 'var(--danger)';
+            } else if (percentage >= 80) {
+                fill.style.background = 'var(--warning)';
+            }
+        }
+
+        function showPremiumModal() {
+            document.getElementById('premiumModal').style.display = 'block';
+        }
+
+        function closePremiumModal() {
+            document.getElementById('premiumModal').style.display = 'none';
+        }
+
+        function upgrade() {
+            // Simulate payment processing
+            showToast('Redirecting to secure checkout...', 'info');
+            
+            setTimeout(() => {
+                userState.plan = 'pro';
+                userState.promptsLimit = Infinity;
+                closePremiumModal();
+                showToast('Welcome to Pro! 🎉 Unlimited prompts unlocked!', 'success');
+                updateUsageBar();
+            }, 2000);
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast show`;
+            
+            if (type === 'error') toast.style.background = 'var(--danger)';
+            else if (type === 'warning') toast.style.background = 'var(--warning)';
+            else if (type === 'info') toast.style.background = '#2196F3';
+            else toast.style.background = 'var(--accent)';
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('premiumModal');
+            if (event.target == modal) {
+                closePremiumModal();
+            }
+        }
+
+        // Auto-select portrait type on load
+        document.addEventListener('DOMContentLoaded', function() {
+            selectPhotoType('portrait');
+            updateUsageBar();
+        });
+
+        // Example prompts for demonstration
+        const examplePrompts = {
+            portrait: "professional headshot with good lighting",
+            product: "product photo of my coffee mug on a white background",
+            lifestyle: "casual photo of me drinking coffee at a cafe",
+            business: "corporate team photo in our office",
+            creative: "artistic photo with interesting lighting",
+            food: "appetizing photo of my homemade pizza"
+        };
+
+        // Add quick example buttons
+        function loadExample() {
+            if (userState.selectedPhotoType) {
+                const exampleText = examplePrompts[userState.selectedPhotoType];
+                document.getElementById('basicPrompt').value = exampleText;
+                showToast('Example loaded! Click generate to see the transformation.', 'info');
+            }
+        }
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                generatePhotoPrompt();
+            }
+        });
+    </script>
 </body>
 </html>
